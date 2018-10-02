@@ -7,7 +7,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-
+using VendingMachine.Logic;
 namespace VendingMachine
 {
     public class Program
@@ -20,5 +20,7 @@ namespace VendingMachine
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>();
+
+        public static Machine VendingMachine;
     }
 }

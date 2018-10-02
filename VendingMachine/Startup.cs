@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
+using VendingMachine.Logic;
 namespace VendingMachine
 {
     public class Startup
@@ -33,6 +33,16 @@ namespace VendingMachine
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddCors(options => options.AddPolicy("CorsPolicy",
+            builder =>
+            {
+                builder.AllowAnyMethod().AllowAnyHeader()
+                       .WithOrigins("https://localhost:44359")
+                       .AllowCredentials();
+            }));
+
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +61,11 @@ namespace VendingMachine
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseCors("CorsPolicy");
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<VendingHub>("/vendinghub");
+            });
 
             app.UseMvc(routes =>
             {
@@ -58,6 +73,8 @@ namespace VendingMachine
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            Program.VendingMachine = Machine.StartMachine();
         }
     }
 }
