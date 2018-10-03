@@ -5,6 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="bundleconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bundleconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BundlerMinifier.Core" Version="2.8.391" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 

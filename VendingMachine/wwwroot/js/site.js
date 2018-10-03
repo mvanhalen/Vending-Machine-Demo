@@ -8,9 +8,10 @@ connection.start().catch(err => console.error(err.toString()));
 var app = new Vue({
     el: '#app',
     data: {
-        message: 'Insert Coins',
-        machine: {products:[],coins:[],customerCoins:[]},
-        totalInserted: 0
+        message: 'Insert coins please, no credit',
+        machine: {products:[],coins:[],customerCoins:[],changeCoins:[]},
+        totalInserted: 0,
+        totalChange: 0
 
     },
     methods: {
@@ -18,19 +19,14 @@ var app = new Vue({
             connection.invoke("ReceivedCoin", coin.cents).catch(err => console.error(err.toString()));
         },
         selectProduct: function (product) {
-
+            connection.invoke("ReceivedSale", product).catch(err => console.error(err.toString()));
         },
-        resetMachine: function () {
-
+        restock: function () {
+            connection.invoke("Restock").catch(err => console.error(err.toString()));
         }
 
     },
-    computed: {
-    
-
-    },
-    beforeCreate() {
-
+    beforeCreate: function() {
         var vm = this;
         console.log('Before Create');      
         connection.on("ReceiveMessage", (message) => {
@@ -42,9 +38,24 @@ var app = new Vue({
                 return accumulator + coin.totalCents;
             }, 0);
 
+            vm.totalChange = vm.machine.changeCoins.reduce(function (accumulator, coin) {
+                return accumulator + coin.totalCents;
+            }, 0);
+
+           
+            if (vm.totalInserted > 130) {
+                this.message = "Select a product or insert more credit";
+            } else if (vm.totalInserted > 0) {
+                this.message = "Insert coins please, insufficent credit";
+            } else
+            {
+                this.message = "Insert coins please, no credit";
+            }
+
+           
         });
     },
-    created() {
+    created: function() {
         console.log('Created');
     }
 });

@@ -15,10 +15,10 @@ namespace VendingMachine.Logic
         {
             //set products
             List<Product> products = new List<Product>();
-            products.Add(new Product { Title = "Tea", Price = 130, Stock = 10 });
-            products.Add(new Product { Title = "Expresso", Price = 180, Stock = 20 });
-            products.Add(new Product { Title = "Juice", Price = 180, Stock = 20 });
-            products.Add(new Product { Title = "Chicken Soup", Price = 180, Stock = 15});
+            products.Add(new Product { Id = 1, Title = "Tea", Price = 130, Stock = 10 });
+            products.Add(new Product { Id = 2, Title = "Expresso", Price = 180, Stock = 20 });
+            products.Add(new Product { Id = 3, Title = "Juice", Price = 180, Stock = 20 });
+            products.Add(new Product { Id = 4, Title = "Chicken Soup", Price = 180, Stock = 15 });
 
             //set coins
             List<Coin> coins = new List<Coin>();

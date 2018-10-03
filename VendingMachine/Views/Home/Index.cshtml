@@ -4,22 +4,39 @@
 
 <div id="app">
     <div class="row">
-        <div class="col-md-2" v-for="product in machine.products" :key="product.id">
-            <div style="height:100px;">
-                <h3>{{product.title}}</h3>
-                <h4>{{product.price}}</h4>
-                <h6>left: {{product.stock}}</h6>
-
+        <h2>{{message}}</h2>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="col-md-3" v-for="product in machine.products" :key="product.id">
+                <div style="height:100px;">
+                    <h3>{{product.title}}</h3>
+                    <h4>&euro; {{parseFloat(product.price / 100).toFixed(2)}}</h4>
+                    <h6>left: {{product.stock}}</h6>
+                </div>
+                <button @@click="selectProduct(product.id)" class="btn btn-primary" :disabled="product.price<=totalInserted?false:true">Buy</button>
             </div>
-            <button @@click="selectProduct(product.id)" class="btn btn-primary">Buy</button>
         </div>
-        <div class="col-md-2">
-            <h2>{{message}}</h2>
-            <button class="btn btn-default" v-for="coin in machine.coins" :key="coin.cents" @@click="insertCoin(coin)">Insert {{coin.cents}}</button>
+        <div class="col-md-4">
 
+            <p v-for="coin in machine.coins" :key="coin.cents"><button class="btn btn-default" @@click="insertCoin(coin)">Insert Coin &euro; {{parseFloat(coin.cents/100).toFixed(2)}}</button></p>
 
-            <h3>Inserted Credit {{totalInserted}}</h3>
-            <p v-for="ccoin in machine.customerCoins" :key="ccoin.cents">{{ccoin.quantity}}x {{ ccoin.cents}}</p>
+            <h3>Inserted Credit &euro; {{parseFloat(totalInserted/100).toFixed(2)}}</h3>
+            <p v-for="coin in machine.customerCoins" :key="coin.cents">{{coin.quantity}}x &euro; {{parseFloat(coin.cents/100).toFixed(2)}}</p>
+
+            <h3>Total Change &euro; {{parseFloat(totalChange/100).toFixed(2)}}</h3>
+            <p v-for="coin in machine.changeCoins" :key="coin.cents">{{coin.quantity}}x &euro; {{parseFloat(coin.cents/100).toFixed(2)}}</p>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <br />
+            <h4>Admin section</h4>
+            <p>Available coins</p>
+            <p v-for="coin in machine.coins" :key="coin.cents">{{coin.quantity}}x {{ coin.cents}}</p>
+
+            <button @@click="restock()" class="btn btn-danger">Restock and Reset</button>
+        </div>
+    
     </div>
 </div>

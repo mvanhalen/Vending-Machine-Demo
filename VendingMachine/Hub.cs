@@ -6,29 +6,59 @@ using System.Threading.Tasks;
 using VendingMachine.Logic;
 namespace VendingMachine
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class VendingHub : Hub
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public async Task SendMessage()
         {
             await Clients.All.SendAsync("ReceiveMessage", Program.VendingMachine);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cents"></param>
+        /// <returns></returns>
         public async Task ReceivedCoin(int cents)
         {
-            Program.VendingMachine.CoinInsert(new Coin { Cents = cents, Quantity = 1, TotalCents = cents });
+            Program.VendingMachine.CoinInsertCustomer(new Coin { Cents = cents, Quantity = 1, TotalCents = cents });
             await SendMessage();
            
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task ReceivedSale(int id)
         {
+            Program.VendingMachine.MakeSale(id);
+
             await SendMessage();
-            //await Clients.All.SendAsync("ReceiveMessage", Program.VendingMachine);
+        
         }
 
-        public Task SendMessageToCaller(string message)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task Restock()
         {
-            return Clients.Caller.SendAsync("ReceiveMessage", message);
+            Program.VendingMachine = Machine.StartMachine();
+
+            await SendMessage();
+
         }
+
+
 
         public Task SendMessageToGroups(string message)
         {
@@ -39,7 +69,7 @@ namespace VendingMachine
         public override async Task OnConnectedAsync()
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, "SignalR Users");
-            await SendMessage();
+            await SendMessage();//return content directy
             await base.OnConnectedAsync();
         }
 
