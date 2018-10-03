@@ -124,10 +124,10 @@ namespace VendingMachine.Logic
             foreach (Coin coin in Coins.OrderByDescending(x => x.Cents))
             {
                 //check if change needed is bigger then coin
-                if ((changeneeded / coin.Cents >= 1))
+                if ((decimal)(changeneeded / coin.Cents) >= 1)
                 {
                     //how many coins can be used
-                    int Qty = (int)Math.Round((decimal)changeneeded / coin.Cents, 0);
+                    int Qty = (int)Math.Round((decimal)(changeneeded / coin.Cents),0);
 
                     //prepare coinchange
                     Coin cointoadd = new Coin { Cents = coin.Cents, Quantity = Qty, TotalCents = Qty * coin.Cents };
