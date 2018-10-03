@@ -6,41 +6,16 @@ using System.Text;
 namespace VendingMachine.Logic
 {
     /// <summary>
-    /// 
+    /// Main class for vending machine
     /// </summary>
     public partial class Machine
     {
+     
         /// <summary>
-        /// 
+        /// Called when a customer inserts a coin
         /// </summary>
         /// <param name="coin"></param>
-        public void CoinInsertMachine(Coin coin)
-        {
-            if (Coins.Count == 0)
-            {
-                Coins.Add(coin);
-            }
-            else
-            {
-                if (Coins.Where(x => x.Cents == coin.Cents).Count() == 0)
-                {
-                    Coins.Add(coin);
-                }
-                else
-                {
-                    Coins.Where(x => x.Cents == coin.Cents).Single().Quantity++;
-                    Coins.Where(x => x.Cents == coin.Cents).Single().TotalCents += coin.Cents;
-                }
-            }
-
-        
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="coin"></param>
-        /// <returns></returns>
+        /// <returns>Total inserted value in cents</returns>
         public int CoinInsertCustomer(Coin coin)
         {
             if (CustomerCoins.Count == 0)
@@ -66,11 +41,40 @@ namespace VendingMachine.Logic
             return CustomerCoinsValue();
         }
 
-       /// <summary>
-       /// 
-       /// </summary>
-       /// <param name="coin"></param>
-       public void RemoveCoin(Coin coin)
+        /// <summary>
+        /// Called when customer inserted money it transferred to machine
+        /// </summary>
+        /// <param name="coin"></param>
+        public void CoinInsertMachine(Coin coin)
+        {
+            //if empty
+            if (Coins.Count == 0)
+            {
+                Coins.Add(coin);
+            }
+            else
+            {
+                //check if coins of the same value are in machine
+                if (Coins.Where(x => x.Cents == coin.Cents).Count() == 0)
+                {
+                    Coins.Add(coin);
+                }
+                else
+                {
+                    //add to existing coins
+                    Coins.Where(x => x.Cents == coin.Cents).Single().Quantity++;
+                    Coins.Where(x => x.Cents == coin.Cents).Single().TotalCents += coin.Cents;
+                }
+            }
+
+
+        }
+
+        /// <summary>
+        /// Called when change is dispursed
+        /// </summary>
+        /// <param name="coin"></param>
+        public void RemoveCoin(Coin coin)
         {
             if (Coins.Where(x => x.Cents == coin.Cents).Count() > 0)
             {
@@ -82,7 +86,7 @@ namespace VendingMachine.Logic
         }
 
         /// <summary>
-        /// 
+        /// Sum value of customer inserted coins in cents
         /// </summary>
         /// <returns></returns>
         public int CustomerCoinsValue()
@@ -93,15 +97,16 @@ namespace VendingMachine.Logic
             }
             else
             {
+                //sum the accumulated total cents per coin value
                 return CustomerCoins.Sum(x => x.TotalCents);
             }
         }
 
         /// <summary>
-        /// 
+        /// Check if a sale possible.
         /// </summary>
-        /// <param name="ProductId"></param>
-        /// <returns></returns>
+        /// <param name="ProductId">Id value of the product object</param>
+        /// <returns>True or False boolean</returns>
         public bool CanMakeSale(int ProductId)
         {
             if (CustomerCoinsValue() >= Products.Where(x => x.Id == ProductId && x.Stock > 0).Single().Price)
@@ -112,10 +117,10 @@ namespace VendingMachine.Logic
         }
 
         /// <summary>
-        /// 
+        /// Get coins for change. Using as less as possible
         /// </summary>
-        /// <param name="changeneeded"></param>
-        /// <returns></returns>
+        /// <param name="changeneeded">The change needed in cents</param>
+        /// <returns>The coins to be returned to the customer</returns>
         public List<Coin> CalculateChange(int changeneeded)
         {
             List<Coin> change = new List<Coin>();
@@ -145,10 +150,10 @@ namespace VendingMachine.Logic
         }
 
         /// <summary>
-        /// 
+        /// Make a product sale
         /// </summary>
-        /// <param name="ProductId"></param>
-        /// <returns></returns>
+        /// <param name="ProductId">The id of the product object</param>
+        /// <returns>List of coins that is changed or the coins the customer has</returns>
         public List<Coin> MakeSale(int ProductId)
         {
             try
@@ -201,14 +206,14 @@ namespace VendingMachine.Logic
                 else
                 {
                     //cancel
-                    return Coins;
+                    return CustomerCoins;
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
                 //Error return coins
-                return Coins;
+                Console.WriteLine(ex.Message);
+                return CustomerCoins;
             }
         }
     }

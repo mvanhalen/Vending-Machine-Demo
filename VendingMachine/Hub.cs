@@ -7,12 +7,12 @@ using VendingMachine.Logic;
 namespace VendingMachine
 {
     /// <summary>
-    /// 
+    /// The SignalR hub which is called via a websocket
     /// </summary>
     public class VendingHub : Hub
     {
         /// <summary>
-        /// 
+        /// Send message returns the currect machine object in the server
         /// </summary>
         /// <returns></returns>
         public async Task SendMessage()
@@ -21,9 +21,9 @@ namespace VendingMachine
         }
 
         /// <summary>
-        /// 
+        /// Called when a coin is inserted. Communicates the updated machine object back to the user
         /// </summary>
-        /// <param name="cents"></param>
+        /// <param name="cents">the cents the coin represents</param>
         /// <returns></returns>
         public async Task ReceivedCoin(int cents)
         {
@@ -33,9 +33,9 @@ namespace VendingMachine
         }
 
         /// <summary>
-        /// 
+        /// Called when a sale is made. Communicates the updated machine object back to the user
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">The id from the product object</param>
         /// <returns></returns>
         public async Task ReceivedSale(int id)
         {
@@ -46,9 +46,8 @@ namespace VendingMachine
         }
 
         /// <summary>
-        /// 
+        /// Reset the machine with base value. Communicates the updated machine object back to the user
         /// </summary>
-        /// <param name="id"></param>
         /// <returns></returns>
         public async Task Restock()
         {
@@ -59,13 +58,14 @@ namespace VendingMachine
         }
 
 
-
+        //default function
         public Task SendMessageToGroups(string message)
         {
             List<string> groups = new List<string>() { "SignalR Users" };
             return Clients.Groups(groups).SendAsync("ReceiveMessage", message);
         }
 
+        //called when  socket connects Start communication back directly
         public override async Task OnConnectedAsync()
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, "SignalR Users");

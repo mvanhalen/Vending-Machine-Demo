@@ -1,10 +1,11 @@
-﻿const connection = new signalR.HubConnectionBuilder()
+﻿//setup connection with SignalR hub uses signalr.js
+const connection = new signalR.HubConnectionBuilder()
     .withUrl("/vendingHub")
     .configureLogging(signalR.LogLevel.Information)
     .build();
 connection.start().catch(err => console.error(err.toString()));
 
-
+//Start vue app users vue.js
 var app = new Vue({
     el: '#app',
     data: {
@@ -28,12 +29,17 @@ var app = new Vue({
     },
     beforeCreate: function() {
         var vm = this;
-        console.log('Before Create');      
+        console.log('Before Create');
+
+        //Respond to returning data from websocket;    
         connection.on("ReceiveMessage", (message) => {
-            console.log('Message');
+            console.log('Message from websocket');
             console.log(message);
+
+            //update machine;
             vm.machine = message;
-            //update totalinserted
+
+            //set accumlated values
             vm.totalInserted = vm.machine.customerCoins.reduce(function(accumulator, coin) {
                 return accumulator + coin.totalCents;
             }, 0);
@@ -42,14 +48,14 @@ var app = new Vue({
                 return accumulator + coin.totalCents;
             }, 0);
 
-           
+            //set instructions
             if (vm.totalInserted > 130) {
-                this.message = "Select a product or insert more credit";
+                vm.message = "Select a product or insert more credit";
             } else if (vm.totalInserted > 0) {
-                this.message = "Insert coins please, insufficent credit";
+                vm.message = "Insert coins please, insufficent credit";
             } else
             {
-                this.message = "Insert coins please, no credit";
+                vm.message = "Insert coins please, no credit";
             }
 
            

@@ -21,6 +21,7 @@ namespace VendingMachine
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>();
 
+        //define object for vending machine. Static and public so it can be used anywhere
         public static Machine VendingMachine;
     }
 }

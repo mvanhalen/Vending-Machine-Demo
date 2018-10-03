@@ -5,7 +5,7 @@ using System.Text;
 namespace VendingMachine.Logic
 {
     /// <summary>
-    /// 
+    /// The coin object which can represent multipe coins of the same value in cents. Totalcents is accumulated
     /// </summary>
     public class Coin
     {
