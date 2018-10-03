@@ -40,13 +40,21 @@ var app = new Vue({
             vm.machine = message;
 
             //set accumlated values
-            vm.totalInserted = vm.machine.customerCoins.reduce(function(accumulator, coin) {
-                return accumulator + coin.totalCents;
-            }, 0);
+            if (vm.machine.customerCoins && vm.machine.customerCoins.length > 0) {
+                vm.totalInserted = vm.machine.customerCoins.reduce(function (accumulator, coin) {
+                    return accumulator + coin.totalCents;
+                }, 0);
+            } else {
+                vm.totalInserted = 0;
+            }
 
-            vm.totalChange = vm.machine.changeCoins.reduce(function (accumulator, coin) {
-                return accumulator + coin.totalCents;
-            }, 0);
+            if (vm.machine.changeCoins && vm.machine.changeCoins.length > 0) {
+                vm.totalChange = vm.machine.changeCoins.reduce(function (accumulator, coin) {
+                    return accumulator + coin.totalCents;
+                }, 0);
+            } else {
+                vm.totalChange = 0;
+            }
 
             //set instructions
             if (vm.totalInserted > 130) {
@@ -63,5 +71,7 @@ var app = new Vue({
     },
     created: function() {
         console.log('Created');
+        //show app
+        document.getElementById('app').classList.remove("notready");
     }
 });
