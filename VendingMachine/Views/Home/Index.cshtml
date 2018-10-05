@@ -30,6 +30,8 @@
             <h3>Inserted Credit &euro; {{parseFloat(totalInserted/100).toFixed(2)}}</h3>
             <p v-for="coin in machine.customerCoins" :key="coin.cents+2">{{coin.quantity}}x &euro; {{parseFloat(coin.cents/100).toFixed(2)}}</p>
 
+            <button @@click="cancel()" class="btn btn-default" :disabled="totalInserted>0?false:true">Cancel Purchase</button>
+
             <h3>Total Change &euro; {{parseFloat(totalChange/100).toFixed(2)}}</h3>
             <p v-for="coin in machine.changeCoins" :key="coin.cents+3">{{coin.quantity}}x &euro; {{parseFloat(coin.cents/100).toFixed(2)}}</p>
         </div>

@@ -12,6 +12,8 @@ All the Vue code is in site.js located in the wwwwroot/js folder of the Vending 
 All C# logic is in the Vending.Machine.Logic project.
 Tests are in the Unit tests project.
 A SignalR websocket connection is used for the connection of UI with the Server. Logic for that is in the Hub.cs file located in the VendingMachine project root.
+Cancel will return the same inserted coins.
+Change with a purchase is based on less coins possible.
 
 Not added:
 Security for clients via SignalR is not implemented. 

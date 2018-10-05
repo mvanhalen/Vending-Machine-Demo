@@ -56,7 +56,21 @@ namespace VendingMachine
             await SendMessage();
 
         }
+        /// <summary>
+        /// Cancel purchase remove coins 
+        /// </summary>
+        /// <returns></returns>
+        public async Task Cancel(bool withchange)
+        {
+            if (withchange) {
+                Program.VendingMachine.ChangeCoins = Program.VendingMachine.CustomerCoins;
+            }
 
+            Program.VendingMachine.CustomerCoins = new List<Coin>();
+
+            await SendMessage();
+
+        }
 
         //default function
         public Task SendMessageToGroups(string message)
@@ -69,8 +83,8 @@ namespace VendingMachine
         public override async Task OnConnectedAsync()
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, "SignalR Users");
-            //reset users coins
-            await Restock();
+            //reset machine coins
+            await Cancel(false);
             await base.OnConnectedAsync();
         }
 

@@ -24,7 +24,13 @@ var app = new Vue({
         },
         restock: function () {
             connection.invoke("Restock").catch(err => console.error(err.toString()));
+        },
+        cancel: function () {
+
+            //cancel and return change
+            connection.invoke("Cancel",true).catch(err => console.error(err.toString()));
         }
+
 
     },
     beforeCreate: function() {
