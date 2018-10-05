@@ -69,7 +69,8 @@ namespace VendingMachine
         public override async Task OnConnectedAsync()
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, "SignalR Users");
-            await SendMessage();//return content directy
+            //reset users coins
+            await Restock();
             await base.OnConnectedAsync();
         }
 
