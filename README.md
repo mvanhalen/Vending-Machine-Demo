@@ -8,15 +8,14 @@ A demo is available at https://vendingmachinedemo.azurewebsites.net
 
 Some notes:
 
-All the Vue code is in site.js located in the wwwwroot/js folder. Of the Vending machine web applicatioon project
+All the Vue code is in site.js located in the wwwwroot/js folder of the Vending machine web application project
 All C# logic is in the Vending.Machine.Logic project.
 Tests are in the Unit tests project.
-A SignalR websocket connection is used to connection the UI with the Server. Logic for that is in the Hub.cs file location in the VendingMachine project root.
-
-Security for listening clients via SignalR is not implemented. 
-No Database or storage used. All runs in memory. To reset to default values just hit the red button.
+A SignalR websocket connection is used for the connection of UI with the Server. Logic for that is in the Hub.cs file located in the VendingMachine project root.
 
 Not added:
+Security for clients via SignalR is not implemented. 
+No Database or storage used. All runs in memory. To reset to default values just hit the red button or refresh teh page.
 A better ui and mobile friedly. 
 UI Logic does not include stock checks now.
 Reconnection logic for web sockets in case of failure. So having a long session might break te connection and a refresh of the window is needed.
