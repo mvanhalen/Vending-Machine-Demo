@@ -18,6 +18,6 @@ Security for clients via SignalR is not implemented.
 No Database or storage used. All runs in memory. To reset to default values just hit the red button or refresh teh page.
 A better ui and mobile friedly. 
 UI Logic does not include stock checks now.
-Reconnection logic for web sockets in case of failure. So having a long session might break te connection and a refresh of the window is needed.
+Reconnection logic for web sockets in case of failure. So having a long session might break the connection and a refresh of the window is needed.
 Tighter integration with node and vue based on parcel js, vuex and vue templates
 
