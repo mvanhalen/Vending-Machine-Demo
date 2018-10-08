@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace VendingMachine.Logic
@@ -9,8 +10,20 @@ namespace VendingMachine.Logic
     /// </summary>
     public class Coin
     {
+        private int _quantity;
+
         public int Cents { get; set;}
-        public int Quantity { get; set;}
-        public int TotalCents { get; set; }
+
+        public int Quantity {
+            get { return _quantity; }
+            set
+            {
+                _quantity = value;
+                TotalCents = value * Cents;
+            }
+        }
+        public int TotalCents { get; private set; }
+
+     
     }
 }

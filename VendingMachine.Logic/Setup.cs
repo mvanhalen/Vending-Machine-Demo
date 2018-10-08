@@ -22,10 +22,10 @@ namespace VendingMachine.Logic
 
             //set coins
             List<Coin> coins = new List<Coin>();
-            coins.Add(new Coin { Cents = 10, Quantity = 100, TotalCents = 10 });
-            coins.Add(new Coin { Cents = 20, Quantity = 100, TotalCents = 20 });
-            coins.Add(new Coin { Cents = 50, Quantity = 100, TotalCents = 50 });
-            coins.Add(new Coin { Cents = 100, Quantity = 100, TotalCents = 100 });
+            coins.Add(new Coin { Cents = 10, Quantity = 100});
+            coins.Add(new Coin { Cents = 20, Quantity = 100});
+            coins.Add(new Coin { Cents = 50, Quantity = 100});
+            coins.Add(new Coin { Cents = 100, Quantity = 100});
 
             Machine machine = new Machine(products,coins);
 

@@ -12,7 +12,8 @@ var app = new Vue({
         message: 'Insert coins please, no credit',
         machine: {products:[],coins:[],customerCoins:[],changeCoins:[]},
         totalInserted: 0,
-        totalChange: 0
+        totalChange: 0,
+        lowOnCoins: false
 
     },
     methods: {

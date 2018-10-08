@@ -27,7 +27,7 @@ namespace VendingMachine
         /// <returns></returns>
         public async Task ReceivedCoin(int cents)
         {
-            Program.VendingMachine.CoinInsertCustomer(new Coin { Cents = cents, Quantity = 1, TotalCents = cents });
+            Program.VendingMachine.CoinInsertCustomer(new Coin { Cents = cents, Quantity = 1});
             await SendMessage();
            
         }

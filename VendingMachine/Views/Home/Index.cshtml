@@ -6,6 +6,7 @@
     .notready{
         display:none;
     }
+
 </style>
 
 <div id="app" class="notready">
@@ -14,7 +15,7 @@
     </div>
     <div class="row">
         <div class="col-md-8">
-            <div class="col-md-3" v-for="product in machine.products" :key="product.id">
+            <div class="col-md-3" v-for="product in machine.products" :key="product.id" >
                 <div style="height:100px;">
                     <h3>{{product.title}}</h3>
                     <h4>&euro; {{parseFloat(product.price / 100).toFixed(2)}}</h4>

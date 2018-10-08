@@ -29,9 +29,9 @@ namespace UnitTests
         public void InsertCoinsCount()
         {
             //insert 160
-            machine.CoinInsertCustomer(new Coin { Cents = 100, Quantity = 1, TotalCents = 100 });
-            machine.CoinInsertCustomer(new Coin { Cents = 50, Quantity = 1, TotalCents = 50 });
-            machine.CoinInsertCustomer(new Coin { Cents = 10, Quantity = 1, TotalCents = 10 });
+            machine.CoinInsertCustomer(new Coin { Cents = 100, Quantity = 1 });
+            machine.CoinInsertCustomer(new Coin { Cents = 50, Quantity = 1 });
+            machine.CoinInsertCustomer(new Coin { Cents = 10, Quantity = 1 });
 
             Assert.AreEqual(machine.CustomerCoinsValue(), 160);
             
@@ -56,8 +56,8 @@ namespace UnitTests
         public void CheckSale()
         {
             //insert 200 1x 1 2x 0.50
-            machine.CoinInsertCustomer(new Coin { Cents = 100, Quantity = 1, TotalCents = 100 });
-            machine.CoinInsertCustomer(new Coin { Cents = 50, Quantity = 2, TotalCents = 100 });
+            machine.CoinInsertCustomer(new Coin { Cents = 100, Quantity = 1 });
+            machine.CoinInsertCustomer(new Coin { Cents = 50, Quantity = 2 });
            
             Assert.AreEqual(machine.CanMakeSale(1), true);
         }
@@ -65,8 +65,8 @@ namespace UnitTests
         [TestMethod]
         public void MakeSaleCheckChange()
         {
-            machine.CoinInsertCustomer(new Coin { Cents = 100, Quantity = 1, TotalCents = 100 });
-            machine.CoinInsertCustomer(new Coin { Cents = 50, Quantity = 2, TotalCents = 100 });
+            machine.CoinInsertCustomer(new Coin { Cents = 100, Quantity = 1 });
+            machine.CoinInsertCustomer(new Coin { Cents = 50, Quantity = 2 });
 
             //200  inserted. Can make sale of 180. Change should be 1 coin of 20
             Assert.AreEqual(machine.MakeSale(2)[0].Cents, 20 );
